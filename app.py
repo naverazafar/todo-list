@@ -11,11 +11,13 @@ class Todo(db.Model):
     title = db.Column(db.String(100))
     complete = db.Column(db.Boolean)
     priority = db.Column(db.String(10), nullable=False, default="Medium")
+    priority_level = db.Column(db.Integer, default=2)
 
 @app.route('/')
 def index():
     # show all todos
-    todo_list = Todo.query.all()
+    #todo_list = Todo.query.all()
+    todo_list = Todo.query.order_by(Todo.priority_level.desc()).all()
     print(todo_list)
     return render_template('base.html', todo_list=todo_list)
 
@@ -24,7 +26,14 @@ def add():
     # add new item
     title = request.form.get("title")
     task_priority = request.form.get("priority")
-    new_todo = Todo(title=title, complete=False, priority=task_priority)
+
+    priority_map = {
+        "Low": 1,
+        "Medium": 2,
+        "High": 3
+    }
+
+    new_todo = Todo(title=title, complete=False, priority=task_priority, priority_level=priority_map[task_priority])
     db.session.add(new_todo)
     db.session.commit()
     return redirect(url_for("index"))
