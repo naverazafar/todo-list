@@ -10,6 +10,7 @@ class Todo(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100))
     complete = db.Column(db.Boolean)
+    priority = db.Column(db.String(10), nullable=False, default="Medium")
 
 @app.route('/')
 def index():
@@ -22,7 +23,8 @@ def index():
 def add():
     # add new item
     title = request.form.get("title")
-    new_todo = Todo(title=title, complete=False)
+    task_priority = request.form.get("priority")
+    new_todo = Todo(title=title, complete=False, priority=task_priority)
     db.session.add(new_todo)
     db.session.commit()
     return redirect(url_for("index"))
@@ -42,6 +44,7 @@ def delete(todo_id):
     db.session.delete(todo)
     db.session.commit()
     return redirect(url_for("index"))
+
 
 if __name__ == "__main__":
     with app.app_context():   # <-- REQUIRED
