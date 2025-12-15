@@ -30,30 +30,36 @@
 
     {% for todo in todo_list %}
     <div class="ui segment">
+            <div style="display:flex; align-items:center; justify-content:space-between;">
 
-                <div class="ui right floated content">
+                <div class="two wide column">
                     {% if todo.priority == "High" %}
-                        <span class="ui orange ribbon label">High</span>
+                        <span class="ui ribbon label priority-high">High</span>
                     {% elif todo.priority == "Medium" %}
-                        <span class="ui yellow ribbon label">Medium</span>
+                        <span class="ui ribbon label  priority-medium">Medium</span>
                     {% elif todo.priority == "Low" %}
-                        <span class="ui green ribbon label">Low</span>
+                        <span class="ui ribbon label  priority-low">Low</span>
                     {% endif %}      
                 </div>
+                
+                <div class="six wide column">
+                   <h3 class="ui big header"> {{ todo.title }} </h3> 
+                </div>
+                
 
-            <h3 class="ui big header"> {{ todo.title }} </h3>
-
-            
-            <div class="ui right floated content">
-                {% if todo.complete == False %}
-                    <span class="ui gray label">Not Completed</span>
-                {% else %}
-                    <span class="ui green label">Completed</span>
-                {% endif %}
-
-                <a class="ui blue button" href="/update/{{ todo.id }}">Update</a>
-                <a class="ui red button" href="/delete/{{ todo.id }}">Delete</a>    
+                <div class="four wide column" style="display:flex; align-items:center; justify-content:flex-end; gap:0.5em; flex-wrap: nowrap;">
+                    {% if todo.complete == False %}
+                        <span class="ui gray label">Not Completed</span>
+                    {% else %}
+                        <span class="ui green label">Completed</span>
+                    {% endif %}
+                    
+                    <a class="ui blue button" href="/update/{{ todo.id }}">Update</a>
+                    <a class="ui red button" href="/delete/{{ todo.id }}">Delete</a> 
+                       
+                </div>
             </div>
+            
     </div>
     {% endfor %}
 </div>
