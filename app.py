@@ -18,7 +18,7 @@ def index():
     # show all todos
     #todo_list = Todo.query.all()
     todo_list = Todo.query.order_by(Todo.priority_level.desc()).all()
-    print(todo_list)
+    # print(todo_list)
     return render_template('base.html', todo_list=todo_list)
 
 @app.route("/add", methods=["POST"])
